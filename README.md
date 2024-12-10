@@ -2,6 +2,8 @@
 
 Unlike subdivision algorithm, this subdivides in all dimensions at the same time. So minor changes in comparison with [Approximation of box dimension of attractors using the subdivision algorithm](https://www.tandfonline.com/doi/abs/10.1080/14689360500141772). Now with int64 support, you can theoretically go to ((r=20)+1)*(dim=3)=63<64, which is quite furher than the dimension paper.
 
+This works on [Manjaro Linux](https://manjaro.org/) after installing [GPU drivers](https://wiki.archlinux.org/title/GPGPU) (for AMD do 'sudo pacman -S rocm-opencl-runtime'). 
+
 Chaotic attractor
 
     pepe@pepe-ms7c90:~/code/pepe78/subdivision_opencl$ python3 main.py
