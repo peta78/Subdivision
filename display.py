@@ -18,17 +18,17 @@ class DispApp(QMainWindow):
 
         layout = QGridLayout()
         self.widgets = [
-            [QLabel(),200,10, 0,0, 1,1],
-            [QDial(),200,200, 1,0, 1,1],
-            [QLabel(),200,10, 2,0, 1,1],
-            [QDial(),200,200, 3,0, 1,1],
-            [QLabel(),200,10, 4,0, 1,1],
-            [QDial(),200,200, 5,0, 1,1],
-            [QCheckBox('Log colors'),200,10, 6,0, 1,1],
-            [QCheckBox('Stereo glasses'),200,10, 7,0, 1,1],
-            [QPushButton('Save picture'),200,10, 8,0, 1,1],
-            [QPushButton('Exit'),200,10, 9,0, 1,1],
-            [QLabel(),1500,1500, 0,1, 10,1],
+            [QLabel(),50,10, 0,0, 1,1],
+            [QDial(),50,50, 1,0, 1,1],
+            [QLabel(),50,10, 2,0, 1,1],
+            [QDial(),50,50, 3,0, 1,1],
+            [QLabel(),50,10, 4,0, 1,1],
+            [QDial(),50,50, 5,0, 1,1],
+            [QCheckBox('Log colors'),50,10, 6,0, 1,1],
+            [QCheckBox('Stereo glasses'),50,10, 7,0, 1,1],
+            [QPushButton('Save picture'),50,10, 8,0, 1,1],
+            [QPushButton('Exit'),50,10, 9,0, 1,1],
+            [QLabel(),600,600, 0,1, 10,1],
         ]
 
         for i in range(len(self.widgets)):
@@ -90,8 +90,8 @@ class DispApp(QMainWindow):
     def redraw(self, fn=None):
         image = np.zeros((1500*1500*4), dtype=np.int32)
         d_image = cl.Buffer(self.ctx, self.mf.READ_WRITE | self.mf.COPY_HOST_PTR, hostbuf=image)
-        imw = 1500
-        imh = 1500
+        imw = 600
+        imh = 600
         al = self.widgets[1][0].value() * 2.0 * math.pi / 360.0
         be = self.widgets[3][0].value() * 2.0 * math.pi / 360.0
         mu = self.widgets[5][0].value()
