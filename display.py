@@ -66,6 +66,9 @@ class DispApp(QMainWindow):
                 cw.clicked.connect(lambda:self.pressed())
             layout.addWidget(cw, w[3], w[4], w[5], w[6])
 
+        self.new_width = 600
+        self.new_height = 600
+
         widget = QWidget()
         widget.setLayout(layout)
 
@@ -88,10 +91,15 @@ class DispApp(QMainWindow):
         self.redraw()
 
     def redraw(self, fn=None):
-        image = np.zeros((1500*1500*4), dtype=np.int32)
+        for i in range(len(self.widgets)):
+            w = self.widgets[i]
+            cw = w[0]
+            cw.resize(w[1],w[2])
+
+        image = np.zeros((self.new_width*self.new_height*4), dtype=np.int32)
         d_image = cl.Buffer(self.ctx, self.mf.READ_WRITE | self.mf.COPY_HOST_PTR, hostbuf=image)
-        imw = 600
-        imh = 600
+        imw = self.new_width
+        imh = self.new_height
         al = self.widgets[1][0].value() * 2.0 * math.pi / 360.0
         be = self.widgets[3][0].value() * 2.0 * math.pi / 360.0
         mu = self.widgets[5][0].value()
@@ -104,7 +112,7 @@ class DispApp(QMainWindow):
             im2 = np.log(1.0 + 10.0 * im2 / max(im2))
         im3 = np.round(65535.0-(65535.0 * im2 / max(im2)))
         im4 = np.array(im3, dtype=np.uint16)
-        im4.reshape((1500,1500,4))
+        im4.reshape((self.new_width,self.new_height,4))
 
         qim = QImage(im4.data, imw, imh, QImage.Format_RGBA64)
         if fn != None:
@@ -117,3 +125,8 @@ class DispApp(QMainWindow):
 
     def pressed(self):
         exit(1)
+
+    def resizeEvent(self, event):
+        self.new_width = self.width()-150
+        self.new_height = self.height()-50
+        self.redraw(event)
