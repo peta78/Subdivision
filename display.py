@@ -31,6 +31,9 @@ class DispApp(QMainWindow):
             [QLabel(),600,600, 0,1, 10,1],
         ]
 
+        self.new_width = 600
+        self.new_height = 600
+
         for i in range(len(self.widgets)):
             w = self.widgets[i]
             cw = w[0]
@@ -66,9 +69,6 @@ class DispApp(QMainWindow):
                 cw.clicked.connect(lambda:self.pressed())
             layout.addWidget(cw, w[3], w[4], w[5], w[6])
 
-        self.new_width = 600
-        self.new_height = 600
-
         widget = QWidget()
         widget.setLayout(layout)
 
@@ -91,16 +91,6 @@ class DispApp(QMainWindow):
         self.redraw()
 
     def redraw(self, fn=None):
-        for i in range(len(self.widgets)):
-            if i == len(self.widgets):
-                break
-            w = self.widgets[i]
-            cw = w[0]
-            if i == len(self.widgets):
-                cw.resize(self.new_width, self.new_height)
-            else:
-                cw.resize(w[1],w[2])
-
         image = np.zeros((self.new_width*self.new_height*4), dtype=np.int32)
         d_image = cl.Buffer(self.ctx, self.mf.READ_WRITE | self.mf.COPY_HOST_PTR, hostbuf=image)
         imw = self.new_width
@@ -134,4 +124,5 @@ class DispApp(QMainWindow):
     def resizeEvent(self, event):
         self.new_width = self.width()-150
         self.new_height = self.height()-20
-        self.redraw(event)
+        self.redraw()
+        self.repaint()
