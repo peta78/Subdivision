@@ -1,4 +1,4 @@
-enum whichSystem { sys_chaotic = 0, sys_rossler = 1, sys_lorenz = 2, sys_aizawa = 3, sys_halvorsen = 4};
+enum whichSystem { sys_chaotic = 0, sys_rossler = 1, sys_lorenz = 2, sys_aizawa = 3, sys_halvorsen = 4, sys_sprott_linz_f = 5};
 
 void chaotic(float *x, float *y, float *z)
 {
@@ -41,6 +41,13 @@ void derivativeHalvorsen(float x, float y, float z, float *dx, float *dy, float 
     *dz = (-1.89f*z-4.0f*x-4.0*y-x*x);
 }
 
+void derivative_sprott_linz_f(float x, float y, float z, float *dx, float *dy, float *dz)
+{
+    *dx = (y+z);
+    *dy = (-x+0.5f*y);
+    *dz = (x*x-z);
+}
+
 void derivative_function(float x, float y, float z, float *dx, float *dy, float *dz, int fun_num)
 {
     switch(fun_num)
@@ -58,6 +65,9 @@ void derivative_function(float x, float y, float z, float *dx, float *dy, float 
             break;
         case sys_halvorsen:
             derivativeHalvorsen(x, y, z, dx, dy, dz);
+            break;
+        case sys_sprott_linz_f:
+            derivative_sprott_linz_f(x, y, z, dx, dy, dz);
             break;
         default:
             break;
@@ -168,19 +178,8 @@ __kernel void dostep(__global long *active, __global long *result,
         case sys_chaotic:
             chaotic(&x, &y, &z);
             break;
-        case sys_rossler:
-            dostepContinuous(&x, &y, &z, min_x, max_x, min_y, max_y, min_z, max_z, numSteps, ss, system);
-            break;
-        case sys_lorenz:
-            dostepContinuous(&x, &y, &z, min_x, max_x, min_y, max_y, min_z, max_z, numSteps, ss, system);
-            break;
-        case sys_aizawa:
-            dostepContinuous(&x, &y, &z, min_x, max_x, min_y, max_y, min_z, max_z, numSteps, ss, system);
-            break;
-        case sys_halvorsen:
-            dostepContinuous(&x, &y, &z, min_x, max_x, min_y, max_y, min_z, max_z, numSteps, ss, system);
-            break;
         default:
+            dostepContinuous(&x, &y, &z, min_x, max_x, min_y, max_y, min_z, max_z, numSteps, ss, system);
             break;
     }
 

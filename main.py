@@ -52,7 +52,7 @@ def display(active, r, which, min_x, min_y, min_z, max_x, max_y, max_z, dminx, d
     plt.savefig(f"./images/{name[which]}_{r:04d}.png")
     #plt.show()
 
-name = ["chaotic", "rossler", "lorenz", "aizawa", "halvorsen"]
+name = ["chaotic", "rossler", "lorenz", "aizawa", "halvorsen", "sprott-linz F"]
 if len(sys.argv) == 2:
     which = int(sys.argv[1])
 else:
@@ -68,22 +68,22 @@ mf = cl.mem_flags
 prg = cl.Program(ctx, open('kernels.cl', mode='rt').read()).build()
 
 knl = prg.dostep
-min_x = np.float32([-2.0, -30.0, -50.0, -4.0, -40.0])
-max_x = np.float32([2.0, 30.0, 50.0, 4.0, 40.0])
-min_y = np.float32([-2.0, -30.0, -50.0, -4.0, -40.0])
-max_y = np.float32([2.0, 30.0, 50.0, 4.0, 40.0])
-min_z = np.float32([-2.0, -30.0, -50.0, -4.0, -40.0])
-max_z = np.float32([2.0, 30.0, 50.0, 4.0, 40.0])
+min_x = np.float32([-2.0, -30.0, -50.0, -4.0, -40.0, -50.0])
+max_x = np.float32([2.0, 30.0, 50.0, 4.0, 40.0, 50.0])
+min_y = np.float32([-2.0, -30.0, -50.0, -4.0, -40.0, -50.0])
+max_y = np.float32([2.0, 30.0, 50.0, 4.0, 40.0, 50.0])
+min_z = np.float32([-2.0, -30.0, -50.0, -4.0, -40.0, -50.0])
+max_z = np.float32([2.0, 30.0, 50.0, 4.0, 40.0, 50.0])
 
-dminx = [-2.0, -15.0, -30.0, -2.0, -15.0]
-dmaxx = [2.0, 15.0, 30.0, 2.0, 15.0]
-dminy = [-2.0, -15.0, -30.0, -2.0, -15.0]
-dmaxy = [2.0, 15.0, 30.0, 2.0, 15.0]
-dminz = [-2.0, -15.0, -10.0, -2.0, -15.0]
-dmaxz = [2.0, 15.0, 40.0, 2.0, 15.0]
+dminx = [-2.0, -15.0, -30.0, -2.0, -15.0, -30.0]
+dmaxx = [2.0, 15.0, 30.0, 2.0, 15.0, 30.0]
+dminy = [-2.0, -15.0, -30.0, -2.0, -15.0, -30.0]
+dmaxy = [2.0, 15.0, 30.0, 2.0, 15.0, 30.0]
+dminz = [-2.0, -15.0, -10.0, -2.0, -15.0, -30.0]
+dmaxz = [2.0, 15.0, 40.0, 2.0, 15.0, 30.0]
 
-numSteps = [0, 1000, 1000, 1000, 1000]
-ss = [0, 0.03, 0.03, 0.03, 0.03]
+numSteps = [0, 1000, 1000, 1000, 1000, 1000]
+ss = [0, 0.03, 0.03, 0.03, 0.03, 0.03]
 
 dim = 3
 test_points = 8
