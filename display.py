@@ -18,16 +18,16 @@ class DispApp(QMainWindow):
 
         layout = QGridLayout()
         self.widgets = [
-            [QLabel(),50,10, 0,0, 1,1],
-            [QDial(),50,50, 1,0, 1,1],
-            [QLabel(),50,10, 2,0, 1,1],
-            [QDial(),50,50, 3,0, 1,1],
-            [QLabel(),50,10, 4,0, 1,1],
-            [QDial(),50,50, 5,0, 1,1],
-            [QCheckBox('Log colors'),50,10, 6,0, 1,1],
-            [QCheckBox('Stereo glasses'),50,10, 7,0, 1,1],
-            [QPushButton('Save picture'),50,10, 8,0, 1,1],
-            [QPushButton('Exit'),50,10, 9,0, 1,1],
+            [QLabel(),100,20, 0,0, 1,1],
+            [QDial(),100,100, 1,0, 1,1],
+            [QLabel(),100,20, 2,0, 1,1],
+            [QDial(),100,100, 3,0, 1,1],
+            [QLabel(),100,20, 4,0, 1,1],
+            [QDial(),100,100, 5,0, 1,1],
+            [QCheckBox('Log colors'),100,20, 6,0, 1,1],
+            [QCheckBox('Stereo glasses'),100,20, 7,0, 1,1],
+            [QPushButton('Save picture'),100,20, 8,0, 1,1],
+            [QPushButton('Exit'),100,20, 9,0, 1,1],
             [QLabel(),600,600, 0,1, 10,1],
         ]
 
@@ -92,9 +92,14 @@ class DispApp(QMainWindow):
 
     def redraw(self, fn=None):
         for i in range(len(self.widgets)):
+            if i == len(self.widgets):
+                break
             w = self.widgets[i]
             cw = w[0]
-            cw.resize(w[1],w[2])
+            if i == len(self.widgets):
+                cw.resize(self.new_width, self.new_height)
+            else:
+                cw.resize(w[1],w[2])
 
         image = np.zeros((self.new_width*self.new_height*4), dtype=np.int32)
         d_image = cl.Buffer(self.ctx, self.mf.READ_WRITE | self.mf.COPY_HOST_PTR, hostbuf=image)
@@ -128,5 +133,5 @@ class DispApp(QMainWindow):
 
     def resizeEvent(self, event):
         self.new_width = self.width()-150
-        self.new_height = self.height()-50
+        self.new_height = self.height()-20
         self.redraw(event)
