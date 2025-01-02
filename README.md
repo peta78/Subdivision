@@ -6,32 +6,6 @@ This works on [Linux Mint](https://linuxmint.com/), [Ubuntu](https://ubuntu.com/
 
 Chaotic attractor
 
-    pepe@pepe-ms7c90:~/code/pepe78/subdivision_opencl$ python3 main.py
-    0 - chaotic
-    1 - rossler
-    2 - lorenz
-    3 - aizawa
-    4 - halvorsen
-    system = 0
-    r = 3 , Number of active boxes = 512
-    Number of testing points = 13824000
-    Number of active boxes for next step = 1066
-    r = 4 , Number of active boxes = 1066
-    Number of testing points = 28782000
-    Number of active boxes for next step = 2181
-    r = 5 , Number of active boxes = 2181
-    Number of testing points = 58887000
-    Number of active boxes for next step = 5782
-    r = 6 , Number of active boxes = 5782
-    Number of testing points = 156114000
-    Number of active boxes for next step = 15218
-    r = 7 , Number of active boxes = 15218
-    Number of testing points = 410886000
-    Number of active boxes for next step = 41431
-    r = 8 , Number of active boxes = 41431
-    Number of testing points = 1118637000 -> Yes, you are testing over one billion points on GPU
-    Number of active boxes for next step = 112544
-
 (2^6)^3 = 262,144 boxes
 
 ![chaotic](./images/chaotic_0005.png)
@@ -74,7 +48,7 @@ Halvorsen attractor
 
 ![halvorsen](./images/halvorsen_0008.png)
 
-Or in 3D with [3d glasses needed](https://www.frisky.world/2021/11/when-you-create-3d-attractors-with.html):
+Or in 3D with [3d glasses needed](https://www.amazon.com/50-Pairs-Glasses-Anaglyph-Cardboard/dp/B07HK9Y6H3/):
 
 ![halvorsen](./images/01.png)
 
